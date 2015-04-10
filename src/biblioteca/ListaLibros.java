@@ -13,7 +13,9 @@ import java.util.ArrayList;
  */
 public class ListaLibros {
 
-    private ArrayList<Libros> listaLibros = new ArrayList();
+    private ArrayList<Libro> listaLibros = new ArrayList();
 
-     
+    public ArrayList<Libro> getListaLibros() {
+        return listaLibros;
+    }
 }

@@ -9,36 +9,36 @@ package biblioteca;
  *
  * @author Javier
  */
-public class Libros {
+public class Libro {
 
     private int id ;
     private String nombreLibro ;
     private String Autor ;
-    private int ISB ;
-    //provisional
+    private int ISBN ;
     private String fechaPublicacion;
     private int nºEdicion ;
-    private String editorial ;
-    private String tipoDeLibro ;
-    private String colegio;
+    //objetos
+    private Editorial editorial ;
+    private Genero tipoDeLibro ;
+    //private Colegio colegio;
     private boolean prestado;
     private String prestadoA;
     private String FechaPrestamo;
     private String fechaDevolucion;
 
-    public Libros() {
+    public Libro() {
+        
     }
-
-    public Libros(int id, String nombreLibro, String Autor, int ISB, String fechaPublicacion, int nºEdicion, String editorial, String tipoDeLibro, String colegio, boolean prestado, String prestadoA, String FechaPrestamo, String fechaDevolucion) {
+//Constructor y getter y setter
+    public Libro(int id, String nombreLibro, String Autor, int ISBN, String fechaPublicacion, int nºEdicion, Editorial editorial, Genero tipoDeLibro, boolean prestado, String prestadoA, String FechaPrestamo, String fechaDevolucion) {
         this.id = id;
         this.nombreLibro = nombreLibro;
         this.Autor = Autor;
-        this.ISB = ISB;
+        this.ISBN = ISBN;
         this.fechaPublicacion = fechaPublicacion;
         this.nºEdicion = nºEdicion;
         this.editorial = editorial;
         this.tipoDeLibro = tipoDeLibro;
-        this.colegio = colegio;
         this.prestado = prestado;
         this.prestadoA = prestadoA;
         this.FechaPrestamo = FechaPrestamo;
@@ -69,12 +69,12 @@ public class Libros {
         this.Autor = Autor;
     }
 
-    public int getISB() {
-        return ISB;
+    public int getISBN() {
+        return ISBN;
     }
 
-    public void setISB(int ISB) {
-        this.ISB = ISB;
+    public void setISBN(int ISBN) {
+        this.ISBN = ISBN;
     }
 
     public String getFechaPublicacion() {
@@ -93,28 +93,20 @@ public class Libros {
         this.nºEdicion = nºEdicion;
     }
 
-    public String getEditorial() {
+    public Editorial getEditorial() {
         return editorial;
     }
 
-    public void setEditorial(String editorial) {
+    public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
     }
 
-    public String getTipoDeLibro() {
+    public Genero getTipoDeLibro() {
         return tipoDeLibro;
     }
 
-    public void setTipoDeLibro(String tipoDeLibro) {
+    public void setTipoDeLibro(Genero tipoDeLibro) {
         this.tipoDeLibro = tipoDeLibro;
-    }
-
-    public String getColegio() {
-        return colegio;
-    }
-
-    public void setColegio(String colegio) {
-        this.colegio = colegio;
     }
 
     public boolean isPrestado() {
@@ -148,5 +140,6 @@ public class Libros {
     public void setFechaDevolucion(String fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
+
 
 }
