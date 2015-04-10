@@ -204,8 +204,10 @@ public class GuardarLibro extends javax.swing.JFrame {
         genero = new Genero(1, "Fantasia");
         Libro libro;
        
+        //se crea un libro individual
         libro = new Libro(1, "ESDLA", "Tolkien", 0000000000, "00/00/0000", 2, editorial, genero, true, "Ingwe", "00/00/0000",  "00/00/0000");
         ListaLibros listaDeLibros = new ListaLibros();
+        //aqui se añade el libro a la lista
         listaDeLibros.getListaLibros().add(libro);
 
 
