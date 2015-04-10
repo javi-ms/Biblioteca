@@ -5,17 +5,16 @@
  */
 package biblioteca;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Javier
  */
-public class Biblioteca {
+public class ListaGenero {
+      private ArrayList<Genero> listaGenero = new ArrayList();
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public ArrayList<Genero> getListaEditorial() {
+        return listaGenero;
     }
-    
 }

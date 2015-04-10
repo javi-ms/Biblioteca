@@ -16,10 +16,10 @@ public class Libro {
     private String Autor ;
     private int ISBN ;
     private String fechaPublicacion;
-    private int nºEdicion ;
+    private int nuEdicion ;
     //objetos
     private Editorial editorial ;
-    private Genero tipoDeLibro ;
+    private Genero genero ;
     //private Colegio colegio;
     private boolean prestado;
     private String prestadoA;
@@ -30,19 +30,19 @@ public class Libro {
         
     }
 //Constructor y getter y setter
-    public Libro(int id, String nombreLibro, String Autor, int ISBN, String fechaPublicacion, int nºEdicion, Editorial editorial, Genero tipoDeLibro, boolean prestado, String prestadoA, String FechaPrestamo, String fechaDevolucion) {
+    public Libro(int id, String nombreLibro, String Autor, int ISBN, String fechaPublicacion, int nuEdicion, Editorial editorial, Genero tipoDeLibro, boolean prestado, String prestadoA, String FechaPrestamo, String fechaDevolucion) {
         this.id = id;
         this.nombreLibro = nombreLibro;
         this.Autor = Autor;
         this.ISBN = ISBN;
         this.fechaPublicacion = fechaPublicacion;
-        this.nºEdicion = nºEdicion;
+        this.nuEdicion = nuEdicion;
         this.editorial = editorial;
-        this.tipoDeLibro = tipoDeLibro;
+        this.genero = tipoDeLibro;
         this.prestado = prestado;
-        this.prestadoA = prestadoA;
-        this.FechaPrestamo = FechaPrestamo;
-        this.fechaDevolucion = fechaDevolucion;
+//        this.prestadoA = prestadoA;
+//        this.FechaPrestamo = FechaPrestamo;
+//        this.fechaDevolucion = fechaDevolucion;
     }
 
     public int getId() {
@@ -86,11 +86,11 @@ public class Libro {
     }
 
     public int getNºEdicion() {
-        return nºEdicion;
+        return nuEdicion;
     }
 
     public void setNºEdicion(int nºEdicion) {
-        this.nºEdicion = nºEdicion;
+        this.nuEdicion = nºEdicion;
     }
 
     public Editorial getEditorial() {
@@ -102,11 +102,11 @@ public class Libro {
     }
 
     public Genero getTipoDeLibro() {
-        return tipoDeLibro;
+        return genero;
     }
 
     public void setTipoDeLibro(Genero tipoDeLibro) {
-        this.tipoDeLibro = tipoDeLibro;
+        this.genero = tipoDeLibro;
     }
 
     public boolean isPrestado() {

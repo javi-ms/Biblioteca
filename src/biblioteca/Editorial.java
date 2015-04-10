@@ -22,7 +22,7 @@ public class Editorial {
         this.nombreEditorial = nombreEditorial;
     }
 
-    public int getIdEditorial() {
+    public int getIdEditorial(int idEditorial) {
         return idEditorial;
     }
 
