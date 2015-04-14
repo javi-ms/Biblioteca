@@ -11,11 +11,16 @@ import java.util.ArrayList;
  *
  * @author Javier
  */
-public class ListaLibros {
+public class Libros {
 
     private ArrayList<Libro> listaLibros = new ArrayList();
 
     public ArrayList<Libro> getListaLibros() {
         return listaLibros;
+    }
+    public int getSize(){
+        //
+        return listaLibros.size();
+        
     }
 }
