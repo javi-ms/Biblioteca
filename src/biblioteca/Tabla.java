@@ -59,6 +59,7 @@ public class Tabla {
 
         @Override
         public int getRowCount() {
+            //aqui indicaremos el tamaño de las filas 
             return listaLibros.getSize();
         }
 //
@@ -72,7 +73,7 @@ public class Tabla {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-
+        //aqui retornara lo que se quiere mostrar en la tabla, solo dar los datos
         }
     }
 }
