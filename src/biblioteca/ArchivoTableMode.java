@@ -11,12 +11,17 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Javier
  */
-public class Tabla {
-    Libros listaLibros =new Libros();
-    //creacion de modelo de tabla
-    class MyTableModel extends AbstractTableModel {
+public class ArchivoTableMode extends AbstractTableModel{
 
-        //
+    private Libros listaLibros;
+
+    public ArchivoTableMode(Libros libros) {
+        this.listaLibros=libros;
+    }
+
+   
+
+    //creacion de modelo de tabla
 
         private String columnNames = "";
 
@@ -24,31 +29,31 @@ public class Tabla {
         @Override
         public String getColumnName(int columna) {
             switch (columna) {
-                case 1:
+                case 0:
                     columnNames = "ID";
                     break;
-                case 2:
+                case 1:
                     columnNames = "Nombre";
                     break;
-                case 3:
+                case 2:
                     columnNames = "Autor";
                     break;
-                case 4:
+                case 3:
                     columnNames = "ISBN";
                     break;
-                case 5:
+                case 4:
                     columnNames = "Fecha Publicación";
                     break;
-                case 6:
+                case 5:
                     columnNames = "Nº Edición";
                     break;
-                case 7:
+                case 6:
                     columnNames = "Editorial";
                     break;
-                case 8:
+                case 7:
                     columnNames = "Genero";
                     break;
-                case 9:
+                case 8:
                     columnNames = "Colegio";
                     break;
 
@@ -67,13 +72,38 @@ public class Tabla {
         @Override
         public int getColumnCount() {
             //aqui le indicaremos la cantidad de columnas que va a ver
-        return 9;
+            return 9;
         }
 //
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-        //aqui retornara lo que se quiere mostrar en la tabla, solo dar los datos
+            listaLibros.getListaLibros().get(rowIndex);
+            Libro datosLibro = Libros.getLibro(rowIndex);
+            //aqui retornara lo que se quiere mostrar en la tabla, solo dar los datos
+            switch (columnIndex) {
+                case 0:
+                    return String.valueOf(datosLibro.getId());
+                case 1:
+                    return datosLibro.getNombreLibro();
+                case 2:
+                    return datosLibro.getAutor();
+                case 3:
+                    return String.valueOf(datosLibro.getISBN());
+                case 4:
+                    return datosLibro.getFechaPublicacion();
+                case 5:
+                    return String.valueOf(datosLibro.getNumEdicion());
+                case 6:
+                    return datosLibro.getEditorial();
+                case 7:
+                    return datosLibro.getGenero();
+                case 8:
+                    return datosLibro.getPrestadoA();
+                default:
+                    return null;
+
+            }
         }
-    }
+    
 }

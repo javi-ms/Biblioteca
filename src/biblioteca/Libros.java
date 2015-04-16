@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Libros {
 
-    private ArrayList<Libro> listaLibros = new ArrayList();
+    private static ArrayList<Libro> listaLibros = new ArrayList();
 
     public ArrayList<Libro> getListaLibros() {
         return listaLibros;
@@ -22,5 +22,8 @@ public class Libros {
         //
         return listaLibros.size();
         
+    }
+    public static Libro getLibro(int index){
+        return listaLibros.get(index);
     }
 }

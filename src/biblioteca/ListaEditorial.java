@@ -20,4 +20,7 @@ public class ListaEditorial {
     public ArrayList<Editorial> getListaEditorial() {
         return listaEditorial;
     }
+
+   
+    
 }

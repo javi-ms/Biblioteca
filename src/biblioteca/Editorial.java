@@ -17,6 +17,11 @@ public class Editorial {
     public Editorial() {
     }
 
+    @Override
+    public String toString() {
+        return nombreEditorial;
+    }
+
     public Editorial(int idEditorial, String nombreEditorial) {
         this.idEditorial = idEditorial;
         this.nombreEditorial = nombreEditorial;

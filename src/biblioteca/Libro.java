@@ -5,6 +5,8 @@
  */
 package biblioteca;
 
+import java.util.Date;
+
 /**
  *
  * @author Javier
@@ -15,7 +17,7 @@ public class Libro {
     private String nombreLibro ;
     private String Autor ;
     private int ISBN ;
-    private String fechaPublicacion;
+    private Date fechaPublicacion;
     private int nuEdicion ;
     //objetos
     private Editorial editorial ;
@@ -23,27 +25,48 @@ public class Libro {
     //private Colegio colegio;
     private boolean prestado;
     private String prestadoA;
-    private String FechaPrestamo;
-    private String fechaDevolucion;
+    private Date FechaPrestamo;
+    private Date fechaDevolucion;
 
     public Libro() {
         
     }
 //Constructor y getter y setter
-    public Libro(int id, String nombreLibro, String Autor, int ISBN, String fechaPublicacion, int nuEdicion, Editorial editorial, Genero tipoDeLibro, boolean prestado, String prestadoA, String FechaPrestamo, String fechaDevolucion) {
+//    public Libro(int id, String nombreLibro, String Autor, int ISBN, Date fechaPublicacion, int nuEdicion, Editorial editorial, Genero genero, boolean prestado, String prestadoA, Date FechaPrestamo, Date fechaDevolucion) {
+//        this.id = id;
+//        this.nombreLibro = nombreLibro;
+//        this.Autor = Autor;
+//        this.ISBN = ISBN;
+//        this.fechaPublicacion = fechaPublicacion;
+//        this.nuEdicion = nuEdicion;
+//        this.editorial = editorial;
+//        this.genero = genero;
+//        this.prestado = prestado;
+//    }
+
+    public Libro(int id, String nombreLibro, String Autor, int ISBN, Date fechaPublicacion, int nuEdicion, Editorial editorial,Genero genero, boolean prestado) {
         this.id = id;
         this.nombreLibro = nombreLibro;
         this.Autor = Autor;
         this.ISBN = ISBN;
         this.fechaPublicacion = fechaPublicacion;
         this.nuEdicion = nuEdicion;
+        this.genero = genero;
         this.editorial = editorial;
-        this.genero = tipoDeLibro;
         this.prestado = prestado;
-//        this.prestadoA = prestadoA;
-//        this.FechaPrestamo = FechaPrestamo;
-//        this.fechaDevolucion = fechaDevolucion;
+    
     }
+//libro prestado y ...
+    public Libro(int id, String nombreLibro, String Autor, boolean prestado, String prestadoA, Date FechaPrestamo, Date fechaDevolucion) {
+        this.id = id;
+        this.nombreLibro = nombreLibro;
+        this.Autor = Autor;
+        this.prestado = prestado;
+        this.prestadoA = prestadoA;
+        this.FechaPrestamo = FechaPrestamo;
+        this.fechaDevolucion = fechaDevolucion;
+    }
+    
 
     public int getId() {
         return id;
@@ -85,12 +108,12 @@ public class Libro {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public int getNºEdicion() {
+    public int getNumEdicion() {
         return nuEdicion;
     }
 
-    public void setNºEdicion(int nºEdicion) {
-        this.nuEdicion = nºEdicion;
+    public void setNumEdicion(int numEdicion) {
+        this.nuEdicion = numEdicion;
     }
 
     public Editorial getEditorial() {
@@ -101,7 +124,7 @@ public class Libro {
         this.editorial = editorial;
     }
 
-    public Genero getTipoDeLibro() {
+    public Genero getGenero() {
         return genero;
     }
 

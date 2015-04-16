@@ -36,5 +36,10 @@ public class Genero {
     public void setNombreGenero(String nombreGenero) {
         this.nombreGenero = nombreGenero;
     }
+    //es necesario el toString para que muestre los datos nuevos
+    @Override
+    public String toString() {
+        return nombreGenero;
+    }
     
 }
