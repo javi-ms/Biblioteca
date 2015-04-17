@@ -83,7 +83,7 @@ public class ArchivoTableMode extends AbstractTableModel{
             //aqui retornara lo que se quiere mostrar en la tabla, solo dar los datos
             switch (columnIndex) {
                 case 0:
-                    return String.valueOf(datosLibro.getId());
+                    return datosLibro.getId();
                 case 1:
                     return datosLibro.getNombreLibro();
                 case 2:
@@ -93,7 +93,7 @@ public class ArchivoTableMode extends AbstractTableModel{
                 case 4:
                     return datosLibro.getFechaPublicacion();
                 case 5:
-                    return String.valueOf(datosLibro.getNumEdicion());
+                    return datosLibro.getNumEdicion();
                 case 6:
                     return datosLibro.getEditorial();
                 case 7:

@@ -100,11 +100,11 @@ public class Libro {
         this.ISBN = ISBN;
     }
 
-    public String getFechaPublicacion() {
+    public Date getFechaPublicacion() {
         return fechaPublicacion;
     }
 
-    public void setFechaPublicacion(String fechaPublicacion) {
+    public void setFechaPublicacion(Date fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
 
@@ -148,19 +148,19 @@ public class Libro {
         this.prestadoA = prestadoA;
     }
 
-    public String getFechaPrestamo() {
+    public Date getFechaPrestamo() {
         return FechaPrestamo;
     }
 
-    public void setFechaPrestamo(String FechaPrestamo) {
+    public void setFechaPrestamo(Date FechaPrestamo) {
         this.FechaPrestamo = FechaPrestamo;
     }
 
-    public String getFechaDevolucion() {
+    public Date getFechaDevolucion() {
         return fechaDevolucion;
     }
 
-    public void setFechaDevolucion(String fechaDevolucion) {
+    public void setFechaDevolucion(Date fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
     }
 
