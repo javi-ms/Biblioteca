@@ -13,23 +13,24 @@ import java.util.Date;
  */
 public class Libro {
 
-    private int id ;
-    private String nombreLibro ;
-    private String Autor ;
-    private int ISBN ;
+    private int id;
+    private String nombreLibro;
+    private String Autor;
+    private int ISBN;
     private Date fechaPublicacion;
-    private int nuEdicion ;
+    private int nuEdicion;
     //objetos
-    private Editorial editorial ;
-    private Genero genero ;
+    private Editorial editorial;
+    private Genero genero;
     //private Colegio colegio;
     private boolean prestado;
     private String prestadoA;
     private Date FechaPrestamo;
     private Date fechaDevolucion;
+    private String sinopsis;
 
     public Libro() {
-        
+
     }
 //Constructor y getter y setter
 //    public Libro(int id, String nombreLibro, String Autor, int ISBN, Date fechaPublicacion, int nuEdicion, Editorial editorial, Genero genero, boolean prestado, String prestadoA, Date FechaPrestamo, Date fechaDevolucion) {
@@ -44,7 +45,7 @@ public class Libro {
 //        this.prestado = prestado;
 //    }
 
-    public Libro(int id, String nombreLibro, String Autor, int ISBN, Date fechaPublicacion, int nuEdicion, Editorial editorial,Genero genero, boolean prestado) {
+    public Libro(int id, String nombreLibro, String Autor, int ISBN, Date fechaPublicacion, int nuEdicion, Editorial editorial, Genero genero, boolean prestado, String sinopsis) {
         this.id = id;
         this.nombreLibro = nombreLibro;
         this.Autor = Autor;
@@ -54,9 +55,13 @@ public class Libro {
         this.genero = genero;
         this.editorial = editorial;
         this.prestado = prestado;
-    
+        this.sinopsis = sinopsis;
+
     }
+
+   
 //libro prestado y ...
+
     public Libro(int id, String nombreLibro, String Autor, boolean prestado, String prestadoA, Date FechaPrestamo, Date fechaDevolucion) {
         this.id = id;
         this.nombreLibro = nombreLibro;
@@ -66,7 +71,6 @@ public class Libro {
         this.FechaPrestamo = FechaPrestamo;
         this.fechaDevolucion = fechaDevolucion;
     }
-    
 
     public int getId() {
         return id;
@@ -108,11 +112,11 @@ public class Libro {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public int getNumEdicion() {
+    public int getNuEdicion() {
         return nuEdicion;
     }
 
-    public void setNumEdicion(int numEdicion) {
+    public void setNuEdicion(int numEdicion) {
         this.nuEdicion = numEdicion;
     }
 
@@ -126,6 +130,9 @@ public class Libro {
 
     public Genero getGenero() {
         return genero;
+    }
+    public void setGenero(Genero genero){
+        this.genero = genero;
     }
 
     public void setTipoDeLibro(Genero tipoDeLibro) {
@@ -164,5 +171,12 @@ public class Libro {
         this.fechaDevolucion = fechaDevolucion;
     }
 
+    public String getSinopsis() {
+        return sinopsis;
+    }
+
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
+    }
 
 }

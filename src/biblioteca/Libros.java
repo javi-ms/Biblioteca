@@ -23,7 +23,7 @@ public class Libros {
         return listaLibros.size();
         
     }
-    public static Libro getLibro(int index){
-        return listaLibros.get(index);
+    public Libro getLibro(int index){
+        return this.listaLibros.get(index);
     }
 }

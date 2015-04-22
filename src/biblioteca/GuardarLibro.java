@@ -2,59 +2,81 @@ package biblioteca;
 
 import java.time.Instant;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class GuardarLibro extends javax.swing.JFrame {
-        Libros libros = new Libros();
+
+    Libros libros = new Libros();
+    
+//    private CategoriasContenedor categoriasContenedor = new CategoriasContenedor();
+//    private ProductosContenedor productosContenedor = new ProductosContenedor()
+    private ListaEditorial editoriales = new ListaEditorial();
+    private ListaGenero generos = new ListaGenero();
+    private ArchivoTableModel archivoTableModel;
+
     public GuardarLibro() {
         initComponents();
+        //añadir editoriales
+        Editorial editorial;
+        editorial = new Editorial(1, "Salamandra");
+        editoriales.getListaEditorial().add(editorial);
+        editorial = new Editorial(1, "Minotauro");
+        editoriales.getListaEditorial().add(editorial);
+
+        //añadir generos
+        Genero genero;
+        genero = new Genero(1, "Fantasia");
+        generos.getListaGenero().add(genero);
+        genero = new Genero(1, "Ciencia ficción");
+        generos.getListaGenero().add(genero);
         
-     // Permitir sólo una fila seleccionada
+        //rellenar los jComboBox
+        jComboBox1.setModel(new DefaultComboBoxModel(editoriales.getListaEditorial().toArray()));
+        //jComboBox1.setRenderer(new ListasDeplegablesRenderer());
+        jComboBox2.setModel(new DefaultComboBoxModel(generos.getListaGenero().toArray()));
+        //jComboBox2.setRenderer(new ListasDeplegablesRenderer());
+
+        // Permitir sólo una fila seleccionada
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         // Añadir un detector de cambio de selección en la tabla
         jTable1.getSelectionModel().addListSelectionListener(
-            new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent event) {
-                    detalleTablas();
+                new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent event) {
+                        detalleTablas();
+                    }
                 }
-            }
         );
-        
-        Editorial editorial;
-        editorial = new Editorial(1, "Salamandra");
-        Genero genero;
-        genero = new Genero(1, "Fantasia");
+
         Libro libro;
         //creacion del contenedor de los libros
-        
+
         //se crea un libro individual
-        libro = new Libro(1, "ESDLA", "Tolkien", 0000000001, Date.from(Instant.now()), 2, editorial, genero, true);
-                //aqui se añade el libro a la lista
+        libro = new Libro(1, "ESDLA", "Tolkien", 0000000001, Date.from(Instant.now()), 2, editorial, genero, true, "El libro va de ");
+        //aqui se añade el libro a la lista
         libros.getListaLibros().add(libro);
-        libro = new Libro(2, "ESDLA", "Tolkien", 0000000001, Date.from(Instant.now()), 2, editorial, genero, true);
+        libro = new Libro(2, "Harry Potter", "Rowling", 0000000002, Date.from(Instant.now()), 2, editorial, genero, false, "el libro trata de");
         //aqui se añade el libro a la lista
         libros.getListaLibros().add(libro);
 
         jTable1.setValueAt(libro, 0, 0);
-        
-        jTable1.setModel(new ArchivoTableMode(libros));
+
+        jTable1.setModel(new ArchivoTableModel(libros));
         jTable1.getColumnModel().getColumn(4).setCellRenderer(new FechaRenderer());
-        
-        
     }
-       public void detalleTablas(){
-           //selecciona una sola fila
+    public void detalleTablas() {
+        //selecciona una sola fila
         int indexSelectedRow = jTable1.getSelectedRow();
-        
-        if(indexSelectedRow < 0) {
+        if (indexSelectedRow < 0) {
             //muestra los textos "vacios"
             jTextField1.setText("Sin selección");
             jTextField2.setText("Sin selección");
             jTextField3.setText("Sin selección");
             jTextField4.setText("Sin selección");
             jTextField5.setText("Sin selección");
+            jTextArea1.setText("Sin seleccion");
 //            jDateChooser1.setDate(null);
 //            jComboBox1.setDefaultLocale(getLocale());
         } else {
@@ -63,16 +85,19 @@ public class GuardarLibro extends javax.swing.JFrame {
             jTextField2.setText(libros.getListaLibros().get(indexSelectedRow).getNombreLibro());
             jTextField3.setText(libros.getListaLibros().get(indexSelectedRow).getAutor());
             jTextField4.setText(String.valueOf(libros.getListaLibros().get(indexSelectedRow).getISBN()));
-            jTextField5.setText(String.valueOf(libros.getListaLibros().get(indexSelectedRow).getNumEdicion()));
+            jTextField5.setText(String.valueOf(libros.getListaLibros().get(indexSelectedRow).getNuEdicion()));
             jDateChooser1.setDate(libros.getListaLibros().get(indexSelectedRow).getFechaPublicacion());
-
+            jTextArea1.setText(libros.getListaLibros().get(indexSelectedRow).getSinopsis());
         }
-}
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -96,15 +121,25 @@ public class GuardarLibro extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jTabbedPane1.addTab("Archivo", jScrollPane2);
+
+        jButton1.setText("Editar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -268,75 +303,20 @@ public class GuardarLibro extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab1", jPanel1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 589, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab2", jPanel2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 589, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab3", jPanel3);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
-
-        jTabbedPane1.addTab("Archivo", jScrollPane2);
-
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(251, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton2)))
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -344,8 +324,15 @@ public class GuardarLibro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-
+        Libro libro = libros.getLibro(jTable1.getSelectedRow());
+//hacer con todos los cuaros
+        libro.setId(Integer.valueOf(jTextField1.getText()));
+        
+        archivoTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
+        jTable1.setEnabled(true);
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -355,11 +342,6 @@ public class GuardarLibro extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    
-
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -398,7 +380,6 @@ public class GuardarLibro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -412,8 +393,6 @@ public class GuardarLibro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;

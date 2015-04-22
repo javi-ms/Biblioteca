@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ListaGenero {
       private ArrayList<Genero> listaGenero = new ArrayList();
 
-    public ArrayList<Genero> getListaEditorial() {
+    public ArrayList<Genero> getListaGenero() {
         return listaGenero;
     }
 }
