@@ -65,6 +65,13 @@ public class GuardarLibro extends javax.swing.JFrame {
 
         jTable1.setModel(new ArchivoTableModel(libros));
         jTable1.getColumnModel().getColumn(4).setCellRenderer(new FechaRenderer());
+        
+        //aqui tengo que poner el tamaño ya sea por numero, variable o desde una clase
+         jTextField1.setDocument(new MaxLengthDocument(15));
+         jTextField2.setDocument(new MaxLengthDocument(20));
+         jTextField3.setDocument(new MaxLengthDocument(jTextField2.getColumns()));
+         jTextField4.setDocument(new MaxLengthDocument(jTextField2.getColumns()));
+         jTextField5.setDocument(new MaxLengthDocument(jTextField2.getColumns()));
     }
     public void detalleTablas() {
         //selecciona una sola fila
