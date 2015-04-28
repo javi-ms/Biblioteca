@@ -37,7 +37,7 @@ public class GuardarLibro extends javax.swing.JFrame {
         jComboBox1.setModel(new DefaultComboBoxModel(editoriales.getListaEditorial().toArray()));
         //jComboBox1.setRenderer(new ListasDeplegablesRenderer());
         jComboBox2.setModel(new DefaultComboBoxModel(generos.getListaGenero().toArray()));
-        //jComboBox2.setRenderer(new ListasDeplegablesRenderer());
+        //jComboBox2.setRenderer(nw ListasDeplegablesRenderer());
 
         // Permitir sólo una fila seleccionada
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -69,9 +69,9 @@ public class GuardarLibro extends javax.swing.JFrame {
         //aqui tengo que poner el tamaño ya sea por numero, variable o desde una clase
          jTextField1.setDocument(new MaxLengthDocument(15));
          jTextField2.setDocument(new MaxLengthDocument(20));
-         jTextField3.setDocument(new MaxLengthDocument(jTextField2.getColumns()));
-         jTextField4.setDocument(new MaxLengthDocument(jTextField2.getColumns()));
-         jTextField5.setDocument(new MaxLengthDocument(jTextField2.getColumns()));
+         jTextField3.setDocument(new MaxLengthDocument(20));
+         jTextField4.setDocument(new ControlNumerico(10));
+         jTextField5.setDocument(new MaxLengthDocument(2));
     }
     public void detalleTablas() {
         //selecciona una sola fila
@@ -181,6 +181,11 @@ public class GuardarLibro extends javax.swing.JFrame {
             }
         });
 
+        jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField4FocusGained(evt);
+            }
+        });
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
@@ -349,6 +354,10 @@ public class GuardarLibro extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4FocusGained
 
     /**
      * @param args the command line arguments

@@ -15,14 +15,14 @@ CREATE TABLE Libro(
 
 Create table Prestamo (
     ID_Prestamo int(3) primary key,
-    ID_libro int(3),
+    ID_Libro int(3),
     NombreLibro varchar(100) NOT NULL,
     Autor varchar(100),
     PrestadoA varchar(20) not null,
     FechaPrestamo date,
     FechaDevolucion date,
-    CONSTRAINT Libro_FK FOREIGN KEY (ID_libro)
-        REFERENCES Libro (ID_libro)
+    CONSTRAINT Libro FOREIGN KEY (ID_Libro)
+        REFERENCES Libro (ID_Libro)
 );
 /*Esto va en un select
 Create table HistoricoLibro (
@@ -36,13 +36,7 @@ Create table HistoricoLibro (
 	CONSTRAINT HistoricoLibro FOREIGN KEY (ID_Prestamo) REFERENCES Prestamo (ID_Prestamo)
 	
 );*/
-
-insert into Libro values(1,'Harry Potter','Rowling',0000000001,1,'Salamandra','Ciencia Ficcion',true,'Javier');
-
 insert into Prestamo values(1,1,'Harry potter','Rowling','Javier','0000/00/00','0000/00/0000' );
-
-Select * from Libro where Id_libro=1;
-/*
 Select 
     p.ID_Prestamo,
     p.Id_Libro,
@@ -54,8 +48,7 @@ Select
 from
     Prestamo as p
 join
-Libro as l using (id_libro)
+Libro as l using (Prestado)
 where
     l.Prestado is true;
-*/
 
