@@ -9,8 +9,10 @@ CREATE TABLE Libro(
     NuEdicion int(3) NOT NULL,
     editorial set('Minotauro', 'Salamandra', 'Edelvives') NOT NULL,
     Genero set('Ciencia Ficcion', 'Medieval'),
+	Publicacion date,
     Prestado boolean NOT NULL,
-    PrestadoA varchar(100)
+    PrestadoA varchar(100),
+	Sinopsis varchar(255)
 );
 
 Create table Prestamo (
@@ -37,12 +39,12 @@ Create table HistoricoLibro (
 	
 );*/
 
-insert into Libro values(1,'Harry Potter','Rowling',0000000001,1,'Salamandra','Ciencia Ficcion',true,'Javier');
+insert into Libro values(1,'Harry Potter','Rowling',0000000001,1,'Salamandra','Ciencia Ficcion','0000-00-00',true,'Javier','El libro va de magia');
 
-insert into Prestamo values(1,1,'Harry potter','Rowling','Javier','0000/00/00','0000/00/0000' );
-
-Select * from Libro where Id_libro=1;
+insert into Prestamo values(1,1,'Harry potter','Rowling','Javier','0000/00/00','0000-00-0000' );
 /*
+Select * from Libro where Id_libro=1;
+
 Select 
     p.ID_Prestamo,
     p.Id_Libro,

@@ -1,7 +1,11 @@
 package biblioteca;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -10,15 +14,23 @@ import javax.swing.event.ListSelectionListener;
 public class GuardarLibro extends javax.swing.JFrame {
 
     Libros libros = new Libros();
-    
+
 //    private CategoriasContenedor categoriasContenedor = new CategoriasContenedor();
 //    private ProductosContenedor productosContenedor = new ProductosContenedor()
     private ListaEditorial editoriales = new ListaEditorial();
     private ListaGenero generos = new ListaGenero();
     private ArchivoTableModel archivoTableModel;
-
+    private static EntityManager entityManager;
+    private Query consultaLibro;
+    Libro libro = new Libro();
     public GuardarLibro() {
         initComponents();
+
+        entityManager = Persistence.createEntityManagerFactory("BibliotecaPU").createEntityManager();
+        consultaLibro = entityManager.createNamedQuery("Libro.findAll");
+        libros.setListaLibros(consultaLibro.getResultList());
+
+        //quiero que el date se convierta en string hay que hacerlo cuando se muestre en pantalla
         //añadir editoriales
         Editorial editorial;
         editorial = new Editorial(1, "Salamandra");
@@ -32,7 +44,6 @@ public class GuardarLibro extends javax.swing.JFrame {
         generos.getListaGenero().add(genero);
         genero = new Genero(1, "Ciencia ficción");
         generos.getListaGenero().add(genero);
-        
         //rellenar los jComboBox
         jComboBox1.setModel(new DefaultComboBoxModel(editoriales.getListaEditorial().toArray()));
         //jComboBox1.setRenderer(new ListasDeplegablesRenderer());
@@ -50,29 +61,29 @@ public class GuardarLibro extends javax.swing.JFrame {
                 }
         );
 
-        Libro libro;
+        
         //creacion del contenedor de los libros
 
-        //se crea un libro individual
-        libro = new Libro(1, "ESDLA", "Tolkien", 0000000001, Date.from(Instant.now()), 2, editorial, genero, true, "El libro va de ");
-        //aqui se añade el libro a la lista
-        libros.getListaLibros().add(libro);
-        libro = new Libro(2, "Harry Potter", "Rowling", 0000000002, Date.from(Instant.now()), 2, editorial, genero, false, "el libro trata de");
-        //aqui se añade el libro a la lista
-        libros.getListaLibros().add(libro);
-
-        jTable1.setValueAt(libro, 0, 0);
-
+//        //se crea un libro individual
+//        libro = new Libro(1, "ESDLA", "Tolkien", 0000000001, Date.from(Instant.now()), 2, editorial, genero, true, "El libro va de ");
+//        //aqui se añade el libro a la lista
+//        libros.getListaLibros().add(libro);
+//        libro = new Libro(2, "Harry Potter", "Rowling", 0000000002, Date.from(Instant.now()), 2, editorial, genero, false, "el libro trata de");
+//        //aqui se añade el libro a la lista
+//        libros.getListaLibros().add(libro);
+//
+//        jTable1.setValueAt(libro, 0, 0);
         jTable1.setModel(new ArchivoTableModel(libros));
-        jTable1.getColumnModel().getColumn(4).setCellRenderer(new FechaRenderer());
-        
+        //jTable1.getColumnModel().getColumn(4).setCellRenderer(new FechaRenderer());
+
         //aqui tengo que poner el tamaño ya sea por numero, variable o desde una clase
-         jTextField1.setDocument(new MaxLengthDocument(15));
-         jTextField2.setDocument(new MaxLengthDocument(20));
-         jTextField3.setDocument(new MaxLengthDocument(20));
-         jTextField4.setDocument(new ControlNumerico(10));
-         jTextField5.setDocument(new MaxLengthDocument(2));
+        jTextField1.setDocument(new MaxLengthDocument(15));
+        jTextField2.setDocument(new MaxLengthDocument(20));
+        jTextField3.setDocument(new MaxLengthDocument(20));
+        jTextField4.setDocument(new ControlNumerico(10));
+        jTextField5.setDocument(new MaxLengthDocument(2));
     }
+
     public void detalleTablas() {
         //selecciona una sola fila
         int indexSelectedRow = jTable1.getSelectedRow();
@@ -88,14 +99,26 @@ public class GuardarLibro extends javax.swing.JFrame {
 //            jComboBox1.setDefaultLocale(getLocale());
         } else {
             //Nos permite mostrar los datos 
-            jTextField1.setText(String.valueOf(libros.getListaLibros().get(indexSelectedRow).getId()));
+            jTextField1.setText(String.valueOf(libros.getListaLibros().get(indexSelectedRow).getIDlibro()));
             jTextField2.setText(libros.getListaLibros().get(indexSelectedRow).getNombreLibro());
             jTextField3.setText(libros.getListaLibros().get(indexSelectedRow).getAutor());
-            jTextField4.setText(String.valueOf(libros.getListaLibros().get(indexSelectedRow).getISBN()));
+            jTextField4.setText(String.valueOf(libros.getListaLibros().get(indexSelectedRow).getIsbn()));
             jTextField5.setText(String.valueOf(libros.getListaLibros().get(indexSelectedRow).getNuEdicion()));
-            jDateChooser1.setDate(libros.getListaLibros().get(indexSelectedRow).getFechaPublicacion());
+            jDateChooser1.setDate(libros.getListaLibros().get(indexSelectedRow).getPublicacion());
             jTextArea1.setText(libros.getListaLibros().get(indexSelectedRow).getSinopsis());
         }
+
+    }
+
+    public void insertLibro() {
+        
+        entityManager.getTransaction().begin();
+        entityManager.persist(libro);
+        entityManager.getTransaction().commit();
+        
+        // Añadir el objeto a la lista de libros
+        libros.getListaLibros().add(libro);
+        //
     }
 
     @SuppressWarnings("unchecked")
@@ -128,6 +151,7 @@ public class GuardarLibro extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -200,6 +224,13 @@ public class GuardarLibro extends javax.swing.JFrame {
 
         jRadioButton2.setText("Nuevo");
 
+        jButton2.setText("guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -211,7 +242,9 @@ public class GuardarLibro extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
-                        .addGap(340, 340, 340))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(249, 249, 249))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -309,7 +342,9 @@ public class GuardarLibro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)))
                 .addGap(73, 73, 73))
         );
 
@@ -336,13 +371,25 @@ public class GuardarLibro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Libro libro = libros.getLibro(jTable1.getSelectedRow());
-//hacer con todos los cuaros
-        libro.setId(Integer.valueOf(jTextField1.getText()));
-        
+
+        //recoge informacion de los campos de texto y lo pone en la tabla
+        //Libro libro = libros.getLibro(jTable1.getSelectedRow());
+        libro.setIDlibro(Integer.valueOf(jTextField1.getText()));
+        libro.setNombreLibro(jTextField2.getText());
+        libro.setAutor(jTextField3.getText());
+        libro.setIsbn(String.valueOf(jTextField4.getText()));
+        //libro.setPublicacion(jDateChooser1.getDate());
+        libro.setNuEdicion(Integer.valueOf(jTextField5.getText()));
+        /*
+         libro.setGenero(jComboBox2.)
+         */
         archivoTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
         jTable1.setEnabled(true);
         
+        insertLibro();
+        
+        archivoTableModel.fireTableRowsInserted(libros.getListaLibros().size()-1, libros.getListaLibros().size()-1);
+        // tableModel is a extends of AbstractTableModel
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -358,6 +405,10 @@ public class GuardarLibro extends javax.swing.JFrame {
     private void jTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4FocusGained
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -396,6 +447,7 @@ public class GuardarLibro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;

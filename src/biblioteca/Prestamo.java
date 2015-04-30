@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Prestamo.findByIDPrestamo", query = "SELECT p FROM Prestamo p WHERE p.iDPrestamo = :iDPrestamo"),
     @NamedQuery(name = "Prestamo.findByNombreLibro", query = "SELECT p FROM Prestamo p WHERE p.nombreLibro = :nombreLibro"),
     @NamedQuery(name = "Prestamo.findByAutor", query = "SELECT p FROM Prestamo p WHERE p.autor = :autor"),
-    @NamedQuery(name = "Prestamo.findByPrestado", query = "SELECT p FROM Prestamo p WHERE p.prestado = :prestado"),
+    @NamedQuery(name = "Prestamo.findByPrestadoA", query = "SELECT p FROM Prestamo p WHERE p.prestadoA = :prestadoA"),
     @NamedQuery(name = "Prestamo.findByFechaPrestamo", query = "SELECT p FROM Prestamo p WHERE p.fechaPrestamo = :fechaPrestamo"),
     @NamedQuery(name = "Prestamo.findByFechaDevolucion", query = "SELECT p FROM Prestamo p WHERE p.fechaDevolucion = :fechaDevolucion")})
 public class Prestamo implements Serializable {
@@ -40,43 +40,43 @@ public class Prestamo implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_Prestamo")
-    private String iDPrestamo;
+    private Integer iDPrestamo;
     @Basic(optional = false)
     @Column(name = "NombreLibro")
     private String nombreLibro;
     @Column(name = "Autor")
     private String autor;
     @Basic(optional = false)
-    @Column(name = "Prestado")
-    private String prestado;
+    @Column(name = "PrestadoA")
+    private String prestadoA;
     @Column(name = "FechaPrestamo")
     @Temporal(TemporalType.DATE)
     private Date fechaPrestamo;
     @Column(name = "FechaDevolucion")
     @Temporal(TemporalType.DATE)
     private Date fechaDevolucion;
-    @JoinColumn(name = "ID_Libro", referencedColumnName = "ID_libro")
+    @JoinColumn(name = "ID_libro", referencedColumnName = "ID_libro")
     @ManyToOne
-    private Libro_1 iDLibro;
+    private Libro iDlibro;
 
     public Prestamo() {
     }
 
-    public Prestamo(String iDPrestamo) {
+    public Prestamo(Integer iDPrestamo) {
         this.iDPrestamo = iDPrestamo;
     }
 
-    public Prestamo(String iDPrestamo, String nombreLibro, String prestado) {
+    public Prestamo(Integer iDPrestamo, String nombreLibro, String prestadoA) {
         this.iDPrestamo = iDPrestamo;
         this.nombreLibro = nombreLibro;
-        this.prestado = prestado;
+        this.prestadoA = prestadoA;
     }
 
-    public String getIDPrestamo() {
+    public Integer getIDPrestamo() {
         return iDPrestamo;
     }
 
-    public void setIDPrestamo(String iDPrestamo) {
+    public void setIDPrestamo(Integer iDPrestamo) {
         this.iDPrestamo = iDPrestamo;
     }
 
@@ -96,12 +96,12 @@ public class Prestamo implements Serializable {
         this.autor = autor;
     }
 
-    public String getPrestado() {
-        return prestado;
+    public String getPrestadoA() {
+        return prestadoA;
     }
 
-    public void setPrestado(String prestado) {
-        this.prestado = prestado;
+    public void setPrestadoA(String prestadoA) {
+        this.prestadoA = prestadoA;
     }
 
     public Date getFechaPrestamo() {
@@ -120,12 +120,12 @@ public class Prestamo implements Serializable {
         this.fechaDevolucion = fechaDevolucion;
     }
 
-    public Libro_1 getIDLibro() {
-        return iDLibro;
+    public Libro getIDlibro() {
+        return iDlibro;
     }
 
-    public void setIDLibro(Libro_1 iDLibro) {
-        this.iDLibro = iDLibro;
+    public void setIDlibro(Libro iDlibro) {
+        this.iDlibro = iDlibro;
     }
 
     @Override

@@ -5,79 +5,90 @@
  */
 package biblioteca;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Javier
  */
-public class Libro {
-
-    private int id;
+@Entity
+@Table(name = "libro")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Libro.findAll", query = "SELECT l FROM Libro l"),
+    @NamedQuery(name = "Libro.findByIDlibro", query = "SELECT l FROM Libro l WHERE l.iDlibro = :iDlibro"),
+    @NamedQuery(name = "Libro.findByNombreLibro", query = "SELECT l FROM Libro l WHERE l.nombreLibro = :nombreLibro"),
+    @NamedQuery(name = "Libro.findByAutor", query = "SELECT l FROM Libro l WHERE l.autor = :autor"),
+    @NamedQuery(name = "Libro.findByIsbn", query = "SELECT l FROM Libro l WHERE l.isbn = :isbn"),
+    @NamedQuery(name = "Libro.findByNuEdicion", query = "SELECT l FROM Libro l WHERE l.nuEdicion = :nuEdicion"),
+    @NamedQuery(name = "Libro.findByEditorial", query = "SELECT l FROM Libro l WHERE l.editorial = :editorial"),
+    @NamedQuery(name = "Libro.findByGenero", query = "SELECT l FROM Libro l WHERE l.genero = :genero"),
+    @NamedQuery(name = "Libro.findByPublicacion", query = "SELECT l FROM Libro l WHERE l.publicacion = :publicacion"),
+    @NamedQuery(name = "Libro.findByPrestado", query = "SELECT l FROM Libro l WHERE l.prestado = :prestado"),
+    @NamedQuery(name = "Libro.findByPrestadoA", query = "SELECT l FROM Libro l WHERE l.prestadoA = :prestadoA"),
+    @NamedQuery(name = "Libro.findBySinopsis", query = "SELECT l FROM Libro l WHERE l.sinopsis = :sinopsis")})
+public class Libro implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "ID_libro")
+    private Integer iDlibro;
+    @Column(name = "Nombre_Libro")
     private String nombreLibro;
-    private String Autor;
-    private int ISBN;
-    private Date fechaPublicacion;
+    @Column(name = "Autor")
+    private String autor;
+    @Column(name = "ISBN")
+    private String isbn;
+    @Basic(optional = false)
+    @Column(name = "NuEdicion")
     private int nuEdicion;
-    //objetos
-    private Editorial editorial;
-    private Genero genero;
-    //private Colegio colegio;
+    @Basic(optional = false)
+    @Column(name = "editorial")
+    private String editorial;
+    @Column(name = "Genero")
+    private String genero;
+    @Column(name = "Publicacion")
+    @Temporal(TemporalType.DATE)
+    private Date publicacion;
+    @Basic(optional = false)
+    @Column(name = "Prestado")
     private boolean prestado;
+    @Column(name = "PrestadoA")
     private String prestadoA;
-    private Date FechaPrestamo;
-    private Date fechaDevolucion;
+    @Column(name = "Sinopsis")
     private String sinopsis;
 
     public Libro() {
-
     }
-//Constructor y getter y setter
-//    public Libro(int id, String nombreLibro, String Autor, int ISBN, Date fechaPublicacion, int nuEdicion, Editorial editorial, Genero genero, boolean prestado, String prestadoA, Date FechaPrestamo, Date fechaDevolucion) {
-//        this.id = id;
-//        this.nombreLibro = nombreLibro;
-//        this.Autor = Autor;
-//        this.ISBN = ISBN;
-//        this.fechaPublicacion = fechaPublicacion;
-//        this.nuEdicion = nuEdicion;
-//        this.editorial = editorial;
-//        this.genero = genero;
-//        this.prestado = prestado;
-//    }
 
-    public Libro(int id, String nombreLibro, String Autor, int ISBN, Date fechaPublicacion, int nuEdicion, Editorial editorial, Genero genero, boolean prestado, String sinopsis) {
-        this.id = id;
-        this.nombreLibro = nombreLibro;
-        this.Autor = Autor;
-        this.ISBN = ISBN;
-        this.fechaPublicacion = fechaPublicacion;
+    public Libro(Integer iDlibro) {
+        this.iDlibro = iDlibro;
+    }
+
+    public Libro(Integer iDlibro, int nuEdicion, String editorial, boolean prestado) {
+        this.iDlibro = iDlibro;
         this.nuEdicion = nuEdicion;
-        this.genero = genero;
         this.editorial = editorial;
         this.prestado = prestado;
-        this.sinopsis = sinopsis;
-
     }
 
-   
-//libro prestado y ...
-
-    public Libro(int id, String nombreLibro, String Autor, boolean prestado, String prestadoA, Date FechaPrestamo, Date fechaDevolucion) {
-        this.id = id;
-        this.nombreLibro = nombreLibro;
-        this.Autor = Autor;
-        this.prestado = prestado;
-        this.prestadoA = prestadoA;
-        this.FechaPrestamo = FechaPrestamo;
-        this.fechaDevolucion = fechaDevolucion;
+    public Integer getIDlibro() {
+        return iDlibro;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setIDlibro(Integer iDlibro) {
+        this.iDlibro = iDlibro;
     }
 
     public String getNombreLibro() {
@@ -89,57 +100,54 @@ public class Libro {
     }
 
     public String getAutor() {
-        return Autor;
+        return autor;
     }
 
-    public void setAutor(String Autor) {
-        this.Autor = Autor;
+    public void setAutor(String autor) {
+        this.autor = autor;
     }
 
-    public int getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(int ISBN) {
-        this.ISBN = ISBN;
-    }
-
-    public Date getFechaPublicacion() {
-        return fechaPublicacion;
-    }
-
-    public void setFechaPublicacion(Date fechaPublicacion) {
-        this.fechaPublicacion = fechaPublicacion;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public int getNuEdicion() {
         return nuEdicion;
     }
 
-    public void setNuEdicion(int numEdicion) {
-        this.nuEdicion = numEdicion;
+    public void setNuEdicion(int nuEdicion) {
+        this.nuEdicion = nuEdicion;
     }
 
-    public Editorial getEditorial() {
+    public String getEditorial() {
         return editorial;
     }
 
-    public void setEditorial(Editorial editorial) {
+    public void setEditorial(String editorial) {
         this.editorial = editorial;
     }
 
-    public Genero getGenero() {
+    public String getGenero() {
         return genero;
     }
-    public void setGenero(Genero genero){
+
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
-    public void setTipoDeLibro(Genero tipoDeLibro) {
-        this.genero = tipoDeLibro;
+    public Date getPublicacion() {
+        return publicacion;
     }
 
-    public boolean isPrestado() {
+    public void setPublicacion(Date publicacion) {
+        this.publicacion = publicacion;
+    }
+
+    public boolean getPrestado() {
         return prestado;
     }
 
@@ -155,22 +163,6 @@ public class Libro {
         this.prestadoA = prestadoA;
     }
 
-    public Date getFechaPrestamo() {
-        return FechaPrestamo;
-    }
-
-    public void setFechaPrestamo(Date FechaPrestamo) {
-        this.FechaPrestamo = FechaPrestamo;
-    }
-
-    public Date getFechaDevolucion() {
-        return fechaDevolucion;
-    }
-
-    public void setFechaDevolucion(Date fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
-    }
-
     public String getSinopsis() {
         return sinopsis;
     }
@@ -179,4 +171,29 @@ public class Libro {
         this.sinopsis = sinopsis;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (iDlibro != null ? iDlibro.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Libro)) {
+            return false;
+        }
+        Libro other = (Libro) object;
+        if ((this.iDlibro == null && other.iDlibro != null) || (this.iDlibro != null && !this.iDlibro.equals(other.iDlibro))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "biblioteca.Libro[ iDlibro=" + iDlibro + " ]";
+    }
+    
 }

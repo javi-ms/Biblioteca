@@ -5,6 +5,8 @@
  */
 package biblioteca;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
 public class ArchivoTableModel extends AbstractTableModel {
 
     private Libros listaLibros;
-
+    private Date dateFormat;
     public ArchivoTableModel(Libros libros) {
         this.listaLibros = libros;
     }
@@ -82,15 +84,18 @@ public class ArchivoTableModel extends AbstractTableModel {
         //aqui retornara lo que se quiere mostrar en la tabla, solo dar los datos
         switch (columnIndex) {
             case 0:
-                return datosLibro.getId();
+                return datosLibro.getIDlibro();
             case 1:
                 return datosLibro.getNombreLibro();
             case 2:
                 return datosLibro.getAutor();
             case 3:
-                return datosLibro.getISBN();
-            case 4:
-                return datosLibro.getFechaPublicacion();
+                return datosLibro.getIsbn();
+//            case 4:
+//                DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.SHORT);
+////               dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//                return fechaFormato.format(datosLibro.getPublicacion());
+                 
             case 5:
                 return datosLibro.getNuEdicion();
             case 6:
@@ -120,7 +125,7 @@ public class ArchivoTableModel extends AbstractTableModel {
         Libro libro = listaLibros.getListaLibros().get(rowIndex);
         switch (columnIndex) {
             case 0:
-                libro.setId(Integer.valueOf((String) aValue));
+                libro.setIDlibro(Integer.valueOf((String) aValue));
                 break;
             case 1:
                 libro.setNombreLibro((String) aValue);
@@ -129,19 +134,19 @@ public class ArchivoTableModel extends AbstractTableModel {
                 libro.setAutor((String) aValue);
                 break;
             case 3:
-                libro.setISBN((int) aValue);
+                libro.setIsbn((String) aValue);
                 break;
             case 4:
-                libro.setFechaPublicacion((Date) aValue);
+                libro.setPublicacion((Date) aValue);
                 break;
             case 5:
                 libro.setNuEdicion((int) aValue);
                 break;
             case 6:
-                libro.setEditorial((Editorial) aValue);
+                libro.setEditorial((String) aValue);
                 break;
             case 7:
-                libro.setGenero((Genero) aValue);
+                libro.setGenero((String) aValue);
                 break;
             case 8:
                 libro.setPrestadoA((String) aValue);

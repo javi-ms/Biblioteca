@@ -6,16 +6,16 @@
 package biblioteca;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Javier
  */
 public class Libros {
+    private static List<Libro> listaLibros = new ArrayList();
 
-    private static ArrayList<Libro> listaLibros = new ArrayList();
-
-    public ArrayList<Libro> getListaLibros() {
+    public List<Libro> getListaLibros() {
         return listaLibros;
     }
     public int getSize(){
@@ -26,4 +26,9 @@ public class Libros {
     public Libro getLibro(int index){
         return this.listaLibros.get(index);
     }
+
+    public static void setListaLibros(List<Libro> listaLibros) {
+        Libros.listaLibros = listaLibros;
+    }
+    
 }
