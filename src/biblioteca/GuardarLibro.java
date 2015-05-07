@@ -109,6 +109,9 @@ public class GuardarLibro extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Insertar un libro
+     */
     public void insertLibro(Libro l) {
 
         entityManager.getTransaction().begin();
@@ -119,16 +122,14 @@ public class GuardarLibro extends javax.swing.JFrame {
         libros.getListaLibros().add(l);
         //
     }
-
     /**
      * editar un libro
      */
-    public void updateLibros(Libro l) {
+    public void ActualizarLibro(Libro libro) {
 
         entityManager.getTransaction().begin();
-        entityManager.merge(l);
+        entityManager.merge(libro);
         entityManager.getTransaction().commit();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -426,11 +427,12 @@ public class GuardarLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4FocusGained
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Libro libro = new Libro();
-        updateLibros(libro);
+//        Libro libro = new Libro();
+//        updateLibros(libro);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       
         int indexSelectedRow = jTable1.getSelectedRow();
         entityManager.getTransaction().begin();
         //borrar el que esta seleccionado en la lista
@@ -445,6 +447,7 @@ public class GuardarLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       
         jTable1.setEnabled(false);
 
 //        jTextField1.setEditable(true);
