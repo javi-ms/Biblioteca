@@ -2,13 +2,13 @@ DROP DATABASE IF EXISTS Biblioteca;
 CREATE DATABASE Biblioteca;
 USE Biblioteca;
 CREATE TABLE Libro(
-    ID_libro int(3) primary key,
+    ID_libro int(3) auto_increment primary key,
     Nombre_Libro varchar(75),
     Autor varchar(75),
     ISBN char(10),
     NuEdicion int(3) NOT NULL,
-    editorial set('Minotauro', 'Salamandra', 'Edelvives') NOT NULL,
-    Genero set('Ciencia Ficcion', 'Medieval'),
+    editorial varchar(30) NOT NULL,
+    Genero varchar(30),
 	Publicacion date,
     Prestado boolean NOT NULL,
     PrestadoA varchar(100),

@@ -29,32 +29,32 @@ public class ArchivoTableModel extends AbstractTableModel {
     @Override
     public String getColumnName(int columna) {
         switch (columna) {
+//            case 0:
+//                columnNames = "ID";
+//                break;
             case 0:
-                columnNames = "ID";
-                break;
-            case 1:
                 columnNames = "Nombre";
                 break;
-            case 2:
+            case 1:
                 columnNames = "Autor";
                 break;
-            case 3:
+            case 2:
                 columnNames = "ISBN";
                 break;
-            case 4:
+            case 3:
                 columnNames = "Fecha Publicación";
                 break;
-            case 5:
+            case 4:
                 columnNames = "Nº Edición";
                 break;
-            case 6:
+            case 5:
                 columnNames = "Editorial";
                 break;
-            case 7:
+            case 6:
                 columnNames = "Genero";
                 break;
-            case 8:
-                columnNames = "Colegio";
+            case 7:
+                columnNames = "Prestado";
                 break;
 
         }
@@ -83,26 +83,26 @@ public class ArchivoTableModel extends AbstractTableModel {
         
         //aqui retornara lo que se quiere mostrar en la tabla, solo dar los datos
         switch (columnIndex) {
+//            case 0:
+//                return datosLibro.getIDlibro();
             case 0:
-                return datosLibro.getIDlibro();
-            case 1:
                 return datosLibro.getNombreLibro();
-            case 2:
+            case 1:
                 return datosLibro.getAutor();
-            case 3:
+            case 2:
                 return datosLibro.getIsbn();
-//            case 4:
+            case 3:
 //                DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.SHORT);
 ////               dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//                return fechaFormato.format(datosLibro.getPublicacion());
+                return datosLibro.getPublicacion();
                  
-            case 5:
+            case 4:
                 return datosLibro.getNuEdicion();
-            case 6:
+            case 5:
                 return datosLibro.getEditorial();
-            case 7:
+            case 6:
                 return datosLibro.getGenero();
-            case 8:
+            case 7:
                 return datosLibro.getPrestadoA();
             default:
                 return null;
@@ -124,31 +124,31 @@ public class ArchivoTableModel extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Libro libro = listaLibros.getListaLibros().get(rowIndex);
         switch (columnIndex) {
+//            case 0:
+//                libro.setIDlibro(Integer.valueOf((String) aValue));
+//                break;
             case 0:
-                libro.setIDlibro(Integer.valueOf((String) aValue));
-                break;
-            case 1:
                 libro.setNombreLibro((String) aValue);
                 break;
-            case 2:
+            case 1:
                 libro.setAutor((String) aValue);
                 break;
-            case 3:
+            case 2:
                 libro.setIsbn((String) aValue);
                 break;
-            case 4:
+            case 3:
                 libro.setPublicacion((Date) aValue);
                 break;
-            case 5:
+            case 4:
                 libro.setNuEdicion((int) aValue);
                 break;
-            case 6:
+            case 5:
                 libro.setEditorial((String) aValue);
                 break;
-            case 7:
+            case 6:
                 libro.setGenero((String) aValue);
                 break;
-            case 8:
+            case 7:
                 libro.setPrestadoA((String) aValue);
                 break;
         }
