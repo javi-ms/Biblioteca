@@ -13,23 +13,25 @@ import javax.swing.text.PlainDocument;
  *
  * @author Javier
  */
-public class ControlNumerico extends PlainDocument{
-  private int maxLength;
+public class ControlNumerico extends PlainDocument {
+
+    private int maxLength;
+
     // Se le debe pasar por parámetro el número máximo de caracteres permitidos
+
     public ControlNumerico(int maxLength) {
         this.maxLength = maxLength;
     }
-    
-    public void insertInt(int offs, String str, AttributeSet a) throws BadLocationException {
+    @Override
+    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
         // Sólo se ejecuta el insertString original si no se sobrepasa el
         //  límite establecido
         //comrpobar el str este entre cero y nuevo
 //        if (str>=0 && str<10) {
-            
-        
-       if(getLength() + str.length() <= maxLength) {
+
+        if (getLength() + str.length() <= maxLength) {
             super.insertString(offs, str, a);
-       }
         }
-          
+    }
+
 }

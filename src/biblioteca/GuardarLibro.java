@@ -76,8 +76,8 @@ public class GuardarLibro extends javax.swing.JFrame {
         //jTable1.getColumnModel().getColumn(4).setCellRenderer(new FechaRenderer());
         //aqui tengo que poner el tamaño ya sea por numero, variable o desde una clase
 //        jTextField1.setDocument(new MaxLengthDocument(15));
-        jTextField2.setDocument(new MaxLengthDocument(20));
-        jTextField3.setDocument(new MaxLengthDocument(20));
+        jTextField2.setDocument(new MaxLengthDocument(50));
+        jTextField3.setDocument(new MaxLengthDocument(50));
         jTextField4.setDocument(new ControlNumerico(10));
         jTextField5.setDocument(new MaxLengthDocument(2));
     }
@@ -122,14 +122,18 @@ public class GuardarLibro extends javax.swing.JFrame {
         libros.getListaLibros().add(l);
         //
     }
+
     /**
      * editar un libro
      */
-    public void ActualizarLibro(Libro libro) {
+    public void actualizarLibro(Libro libro, int posLista) {
 
         entityManager.getTransaction().begin();
         entityManager.merge(libro);
         entityManager.getTransaction().commit();
+
+        libros.getListaLibros().set(posLista, libro);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -163,6 +167,8 @@ public class GuardarLibro extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,6 +260,15 @@ public class GuardarLibro extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Prestado");
+
+        jRadioButton3.setText("Si");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -298,10 +313,15 @@ public class GuardarLibro extends javax.swing.JFrame {
                                 .addComponent(jRadioButton2)
                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jRadioButton1, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(314, 314, 314))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton3)))
+                        .addGap(166, 166, 166))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -351,8 +371,10 @@ public class GuardarLibro extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(100, 100, 100)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jRadioButton3))
+                        .addGap(99, 99, 99)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,8 +432,6 @@ public class GuardarLibro extends javax.swing.JFrame {
 
         archivoTableModel.fireTableRowsInserted(libros.getListaLibros().size() - 1, libros.getListaLibros().size() - 1);
         // tableModel is a extends of AbstractTableModel
-
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -427,12 +447,30 @@ public class GuardarLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4FocusGained
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-//        Libro libro = new Libro();
-//        updateLibros(libro);
+        //me devuelve la posicion seleccionada
+        if (jTable1.getSelectedRow() > -1) {
+
+            libros.getListaLibros().get(jTable1.getSelectedRow()).setNombreLibro(jTextField2.getText());
+            libros.getListaLibros().get(jTable1.getSelectedRow()).setAutor(jTextField3.getText());
+            libros.getListaLibros().get(jTable1.getSelectedRow()).setIsbn(String.valueOf(jTextField4.getText()));
+            libros.getListaLibros().get(jTable1.getSelectedRow()).setPublicacion(jDateChooser1.getDate());
+            libros.getListaLibros().get(jTable1.getSelectedRow()).setNuEdicion(Integer.valueOf(jTextField5.getText()));
+    //        Editorial edit = (Editorial) jComboBox1.getSelectedItem();
+            //        Genero gene = (Genero) jComboBox2.getSelectedItem();
+            libros.getListaLibros().get(jTable1.getSelectedRow()).setEditorial(String.valueOf(jComboBox1.getSelectedItem()));
+            libros.getListaLibros().get(jTable1.getSelectedRow()).setGenero(String.valueOf(jComboBox2.getSelectedItem()));
+            libros.getListaLibros().get(jTable1.getSelectedRow()).setSinopsis(jTextArea1.getText());
+
+        }
+        // libros.getListaLibros().get(jTable1.getSelectedRow()) es un libro
+        //jTable1.getSelectedRow() es la posicion
+        //MIRAR QUE FILA SE HA SELECCIONADO, POSICION DE LA LISTA DEL LIBRO, 
+        actualizarLibro(libros.getListaLibros().get(jTable1.getSelectedRow()), jTable1.getSelectedRow());
+        archivoTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       
+
         int indexSelectedRow = jTable1.getSelectedRow();
         entityManager.getTransaction().begin();
         //borrar el que esta seleccionado en la lista
@@ -447,7 +485,7 @@ public class GuardarLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       
+
         jTable1.setEnabled(false);
 
 //        jTextField1.setEditable(true);
@@ -463,6 +501,10 @@ public class GuardarLibro extends javax.swing.JFrame {
         jTextField5.setText("");
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -508,6 +550,7 @@ public class GuardarLibro extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -518,6 +561,7 @@ public class GuardarLibro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;

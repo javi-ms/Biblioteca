@@ -5,9 +5,8 @@
  */
 package biblioteca;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.text.DateFormat;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -72,7 +71,7 @@ public class ArchivoTableModel extends AbstractTableModel {
     @Override
     public int getColumnCount() {
         //aqui le indicaremos la cantidad de columnas que va a ver
-        return 9;
+        return 8;
     }
 //
 
@@ -95,7 +94,6 @@ public class ArchivoTableModel extends AbstractTableModel {
 //                DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.SHORT);
 ////               dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 return datosLibro.getPublicacion();
-                 
             case 4:
                 return datosLibro.getNuEdicion();
             case 5:
@@ -103,7 +101,7 @@ public class ArchivoTableModel extends AbstractTableModel {
             case 6:
                 return datosLibro.getGenero();
             case 7:
-                return datosLibro.getPrestadoA();
+                return datosLibro.getPrestado();
             default:
                 return null;
 
@@ -149,9 +147,8 @@ public class ArchivoTableModel extends AbstractTableModel {
                 libro.setGenero((String) aValue);
                 break;
             case 7:
-                libro.setPrestadoA((String) aValue);
+                libro.setPrestado((boolean) aValue);
                 break;
         }
-
     }
 }
