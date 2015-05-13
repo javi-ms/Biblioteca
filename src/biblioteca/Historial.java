@@ -15,7 +15,7 @@ public class Historial extends javax.swing.JDialog {
     public Historial(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setVisible(modal);
+        setVisible(false);
     }
 
     /**
