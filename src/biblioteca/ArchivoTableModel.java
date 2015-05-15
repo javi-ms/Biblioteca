@@ -94,8 +94,8 @@ public class ArchivoTableModel extends AbstractTableModel {
             case 3:
 //                DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.SHORT);
 //               dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                return fechaFormato.format(datosLibro.getPublicacion());
-            //return datosLibro.getPublicacion();
+                //return fechaFormato.format(datosLibro.getPublicacion());
+            return datosLibro.getPublicacion();
             case 4:
                 return datosLibro.getNuEdicion();
             case 5:
