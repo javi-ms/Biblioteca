@@ -18,17 +18,17 @@ public class ListasDeplegablesRenderer extends DefaultListCellRenderer{
     
          // Rellenar combobox de categorías
         
-//    @Override
-//    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-//        Editorial editoriales = (Editorial)value;
-//        setText(editoriales.getNombreEditorial());
-//        if(isSelected) {
-//            this.setBackground(Color.cyan);
-//        } else {
-//            this.setBackground(Color.white);
-//        }
-//        return this;
-//    }
+    @Override
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        Editorial editoriales = (Editorial)value;
+        setText(editoriales.getNombreEditorial());
+        if(isSelected) {
+            this.setBackground(Color.cyan);
+        } else {
+            this.setBackground(Color.white);
+        }
+        return this;
+    }
  
 
     

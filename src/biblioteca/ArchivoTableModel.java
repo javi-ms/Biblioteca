@@ -17,6 +17,8 @@ public class ArchivoTableModel extends AbstractTableModel {
 
     private Libros listaLibros;
     private Date dateFormat;
+    DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.SHORT);
+
     public ArchivoTableModel(Libros libros) {
         this.listaLibros = libros;
     }
@@ -77,9 +79,8 @@ public class ArchivoTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        
         Libro datosLibro = listaLibros.getListaLibros().get(rowIndex);
-        
+
         //aqui retornara lo que se quiere mostrar en la tabla, solo dar los datos
         switch (columnIndex) {
 //            case 0:
@@ -92,8 +93,9 @@ public class ArchivoTableModel extends AbstractTableModel {
                 return datosLibro.getIsbn();
             case 3:
 //                DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.SHORT);
-////               dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                return datosLibro.getPublicacion();
+//               dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                return fechaFormato.format(datosLibro.getPublicacion());
+            //return datosLibro.getPublicacion();
             case 4:
                 return datosLibro.getNuEdicion();
             case 5:
