@@ -3,33 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package biblioteca;
 
+package biblioteca.Renderer;
+import biblioteca.Desplegables.Editorial;
+import biblioteca.Desplegables.Genero;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author Javier
  */
-public class ListasDeplegablesRenderer extends DefaultListCellRenderer{
-    
-         // Rellenar combobox de categorías
-        
-    @Override
+public class GeneroDesplegableRender extends DefaultListCellRenderer{
+@Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        Editorial editoriales = (Editorial)value;
-        setText(editoriales.getNombreEditorial());
+        
+        Genero genero = (Genero)value;
+        
+        setText(genero.getNombreGenero());
+        
         if(isSelected) {
-            this.setBackground(Color.cyan);
+            this.setBackground(Color.red);
         } else {
-            this.setBackground(Color.white);
+            this.setBackground(Color.green);
         }
         return this;
     }
- 
-
-    
 }

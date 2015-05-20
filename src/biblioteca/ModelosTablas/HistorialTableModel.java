@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package biblioteca;
+package biblioteca.ModelosTablas;
 
+import biblioteca.Libro;
+import biblioteca.Libros;
 import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 

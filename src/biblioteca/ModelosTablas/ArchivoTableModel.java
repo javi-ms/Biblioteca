@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package biblioteca;
+package biblioteca.ModelosTablas;
 
+import biblioteca.Libro;
+import biblioteca.Libros;
 import java.util.Date;
 import java.text.DateFormat;
 import javax.swing.table.AbstractTableModel;
@@ -17,6 +19,7 @@ public class ArchivoTableModel extends AbstractTableModel {
 
     private Libros listaLibros;
     private Date dateFormat;
+    
     DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.SHORT);
 
     public ArchivoTableModel(Libros libros) {
@@ -65,7 +68,7 @@ public class ArchivoTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        //aqui indicaremos el tamaño de las filas 
+        //aqui indicaremos el numero de las filas 
         return listaLibros.getSize();
     }
 //
@@ -79,6 +82,7 @@ public class ArchivoTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        
         Libro datosLibro = listaLibros.getListaLibros().get(rowIndex);
 
         //aqui retornara lo que se quiere mostrar en la tabla, solo dar los datos
@@ -113,7 +117,7 @@ public class ArchivoTableModel extends AbstractTableModel {
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 0:
+            case 7:
                 return false;
             default:
                 return true;

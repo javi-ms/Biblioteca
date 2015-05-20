@@ -1,7 +1,7 @@
-package biblioteca;
+package biblioteca.Desplegables;
 
 
-import biblioteca.Editorial;
+import biblioteca.Desplegables.Editorial;
 import java.util.ArrayList;
 
 /*
