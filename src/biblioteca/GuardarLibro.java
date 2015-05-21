@@ -115,8 +115,7 @@ public class GuardarLibro extends javax.swing.JFrame {
         jTextFieldAutor.setDocument(new MaxLengthDocument(50));
         jTextFieldEdicion.setDocument(new MaxLengthDocument(2));
         /**
-         * Con esto controlamos la cantidad de numeros que vamos a colocar Esto
-         * esta
+         * Con esto controlamos la cantidad de numeros que vamos a colocar 
          */
         jTextFieldISBN.setDocument(new ControlNumerico(10));
 

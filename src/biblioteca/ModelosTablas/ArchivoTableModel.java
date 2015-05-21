@@ -60,7 +60,6 @@ public class ArchivoTableModel extends AbstractTableModel {
             case 7:
                 columnNames = "Prestado";
                 break;
-
         }
         return columnNames;
     }
