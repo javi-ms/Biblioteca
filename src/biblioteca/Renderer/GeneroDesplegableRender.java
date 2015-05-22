@@ -26,11 +26,11 @@ public class GeneroDesplegableRender extends DefaultListCellRenderer{
         setText(genero.getNombreGenero());
         
         if(isSelected) {
-            this.setBackground(Color.red);
-            this.setForeground(Color.black);
+            this.setBackground(Color.black);
+            this.setForeground(Color.white);
         } else {
-            this.setBackground(Color.green);
-            this.setForeground(Color.yellow);
+            this.setBackground(Color.white);
+            this.setForeground(Color.blue);
         }
         return this;
     }
