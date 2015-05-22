@@ -18,6 +18,15 @@ CREATE TABLE Libro(
 Create table Prestamo (
     ID_Prestamo int(3) primary key,
     ID_libro int(3),
+    PrestadoA varchar(20) not null,
+    FechaPrestamo date,
+    FechaDevolucion date,
+    CONSTRAINT Libro_FK FOREIGN KEY (ID_libro)
+        REFERENCES Libro (ID_libro)
+);/*
+Create table Prestamo (
+    ID_Prestamo int(3) primary key,
+    ID_libro int(3),
     NombreLibro varchar(100) NOT NULL,
     Autor varchar(100),
     PrestadoA varchar(20) not null,
@@ -25,7 +34,7 @@ Create table Prestamo (
     FechaDevolucion date,
     CONSTRAINT Libro_FK FOREIGN KEY (ID_libro)
         REFERENCES Libro (ID_libro)
-);
+);*/
 /*Esto va en un select
 Create table HistoricoLibro (
     ID_libro int unsigned primary key,

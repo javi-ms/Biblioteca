@@ -27,8 +27,10 @@ public class GeneroDesplegableRender extends DefaultListCellRenderer{
         
         if(isSelected) {
             this.setBackground(Color.red);
+            this.setForeground(Color.black);
         } else {
             this.setBackground(Color.green);
+            this.setForeground(Color.yellow);
         }
         return this;
     }

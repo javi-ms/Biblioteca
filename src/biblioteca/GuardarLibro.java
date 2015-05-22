@@ -14,22 +14,24 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class GuardarLibro extends javax.swing.JFrame {
 
@@ -76,8 +78,10 @@ public class GuardarLibro extends javax.swing.JFrame {
          * Permitir sólo una fila seleccionada
          */
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        // Añadir un detector de cambio de selección en la tabla
+
+        /**
+         * Añadir un detector de cambio de selección en la tabla
+         */
         jTable1.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent event) {
@@ -95,18 +99,18 @@ public class GuardarLibro extends javax.swing.JFrame {
 //        libros.getListaLibros().add(libro);
 //        jTable1.setValueAt(libro, 0, 0);
         //
+
         archivoTableModel = new ArchivoTableModel(libros);
         //
         jTable1.setModel(archivoTableModel);
         //jTable1.getColumnModel().getColumn(4).setCellRenderer(new FechaRenderer());
-        
+
         //jTextField1.setDocument(new MaxLengthDocument(15));
         jComboBoxEditorial.setRenderer(new EditorialDeplegableRenderer());
         jComboBoxGenero.setRenderer(new GeneroDesplegableRender());
 
         //jTable1.getColumnModel().getColumn(3).setCellRenderer(new FechaRenderer());
         //jTable1.getColumnModel().getColumn(6).setCellRenderer(new ListasDeplegablesRenderer());
-        
         /**
          * Con esto controlamos la cantidad de letras que vamos a colocar en los
          * campos
@@ -115,16 +119,17 @@ public class GuardarLibro extends javax.swing.JFrame {
         jTextFieldAutor.setDocument(new MaxLengthDocument(50));
         jTextFieldEdicion.setDocument(new MaxLengthDocument(2));
         /**
-         * Con esto controlamos la cantidad de numeros que vamos a colocar 
+         * Con esto controlamos la cantidad de numeros que vamos a colocar
          */
         jTextFieldISBN.setDocument(new ControlNumerico(10));
 
         //llama al metodo creado
 //        this.ListaTabla();
     }
-/**
- *Nos permite mostrar los datos en los campos 
- */
+
+    /**
+     * Nos permite mostrar los datos en los campos
+     */
     public void detalleTablas() {
         //selecciona una sola fila
         int indexSelectedRow = jTable1.getSelectedRow();
@@ -605,44 +610,57 @@ public class GuardarLibro extends javax.swing.JFrame {
 
     private void jButtonHistorialPrestadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHistorialPrestadoActionPerformed
 
-/*añadido por que mas abajo daba error*/
-        //Libro libro = new Libro();
-        // if (libro.prestado == true) {
+        /*añadido por que mas abajo daba error*/
+        Libro libro = new Libro();
+//         if (libro.getPrestado() == true) {
 
         Connection con;
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost/Biblioteca", "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Libro");
+
+            try {
+                Map parameters = new HashMap();
+                JasperReport jasperReport
+                        = JasperCompileManager.compileReport(
+                                "Biblioteca/Biblioteca.jrxml");
+                JasperPrint jasperPrint = JasperFillManager.fillReport(
+                        jasperReport, parameters, new JRResultSetDataSource(rs));
+                JasperViewer.viewReport(jasperPrint);
+            } catch (JRException ex) {
+                ex.printStackTrace();
+            }
+
             while (rs.next()) {
-                
-               
-                Libro libro = new Libro();
+                /*
+                *Es el nombre que tengas puesto en la base de datos 
+                */
                 String nombre = rs.getString("Nombre_Libro");
                 String autor = rs.getString("Autor");
                 int isbn = rs.getInt("ISBN");
                 String editorial = rs.getString("editorial");
                 String genero = rs.getString("Genero");
                 String prestadA = rs.getString("PrestadoA");
-                
+
                 libro.setNombreLibro(nombre);
                 libro.setAutor(autor);
                 libro.setIsbn(String.valueOf(isbn));
                 libro.setEditorial(editorial);
                 libro.setGenero(genero);
                 libro.setPrestadoA(prestadA);
-           
-                jTextArea2.append(libro.getNombreLibro()+" "+libro.getAutor()+"\n");
-                
+
+                jTextArea2.append(libro.getNombreLibro() + " " + libro.getAutor() + "\n");
+
                 //jTextArea1.append(nombre+autor);
             }
-            
-            }catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             Logger.getLogger(GuardarLibro.class.getName()).log(Level.SEVERE, null, ex);
-        
+
         }
 
-        // }
+//         }
     }//GEN-LAST:event_jButtonHistorialPrestadoActionPerformed
 
     /**

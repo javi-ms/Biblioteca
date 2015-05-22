@@ -30,8 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Prestamo.findAll", query = "SELECT p FROM Prestamo p"),
     @NamedQuery(name = "Prestamo.findByIDPrestamo", query = "SELECT p FROM Prestamo p WHERE p.iDPrestamo = :iDPrestamo"),
-    @NamedQuery(name = "Prestamo.findByNombreLibro", query = "SELECT p FROM Prestamo p WHERE p.nombreLibro = :nombreLibro"),
-    @NamedQuery(name = "Prestamo.findByAutor", query = "SELECT p FROM Prestamo p WHERE p.autor = :autor"),
     @NamedQuery(name = "Prestamo.findByPrestadoA", query = "SELECT p FROM Prestamo p WHERE p.prestadoA = :prestadoA"),
     @NamedQuery(name = "Prestamo.findByFechaPrestamo", query = "SELECT p FROM Prestamo p WHERE p.fechaPrestamo = :fechaPrestamo"),
     @NamedQuery(name = "Prestamo.findByFechaDevolucion", query = "SELECT p FROM Prestamo p WHERE p.fechaDevolucion = :fechaDevolucion")})
@@ -41,11 +39,6 @@ public class Prestamo implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID_Prestamo")
     private Integer iDPrestamo;
-    @Basic(optional = false)
-    @Column(name = "NombreLibro")
-    private String nombreLibro;
-    @Column(name = "Autor")
-    private String autor;
     @Basic(optional = false)
     @Column(name = "PrestadoA")
     private String prestadoA;
@@ -66,9 +59,8 @@ public class Prestamo implements Serializable {
         this.iDPrestamo = iDPrestamo;
     }
 
-    public Prestamo(Integer iDPrestamo, String nombreLibro, String prestadoA) {
+    public Prestamo(Integer iDPrestamo, String prestadoA) {
         this.iDPrestamo = iDPrestamo;
-        this.nombreLibro = nombreLibro;
         this.prestadoA = prestadoA;
     }
 
@@ -78,22 +70,6 @@ public class Prestamo implements Serializable {
 
     public void setIDPrestamo(Integer iDPrestamo) {
         this.iDPrestamo = iDPrestamo;
-    }
-
-    public String getNombreLibro() {
-        return nombreLibro;
-    }
-
-    public void setNombreLibro(String nombreLibro) {
-        this.nombreLibro = nombreLibro;
-    }
-
-    public String getAutor() {
-        return autor;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
     }
 
     public String getPrestadoA() {
