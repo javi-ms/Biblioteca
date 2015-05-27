@@ -112,7 +112,7 @@ public class ArchivoTableModel extends AbstractTableModel {
 
         }
     }
-
+//nos permite modificar en la tabla
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         switch (columnIndex) {
@@ -122,7 +122,6 @@ public class ArchivoTableModel extends AbstractTableModel {
                 return true;
         }
     }
-
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Libro libro = listaLibros.getListaLibros().get(rowIndex);

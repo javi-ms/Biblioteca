@@ -13,8 +13,8 @@ public class FechaRenderer extends DefaultTableCellRenderer {
 
     @Override
     protected void setValue(Object value) {
-        DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.SHORT);
-        setText(fechaFormato.format((Date)value));
+      //  DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.short);
+        setText(fechaFormato.format(String.valueOf(value)));
         setHorizontalAlignment(RIGHT);
     }
 

@@ -8,7 +8,9 @@ import biblioteca.ControladoresCamposDeTexto.ControlNumerico;
 import biblioteca.ControladoresCamposDeTexto.MaxLengthDocument;
 import biblioteca.ModelosTablas.ArchivoTableModel;
 import biblioteca.Renderer.EditorialDeplegableRenderer;
+import biblioteca.Renderer.FechaRenderer;
 import biblioteca.Renderer.GeneroDesplegableRender;
+import biblioteca.Renderer.PrestadoRenderer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -53,7 +55,6 @@ public class GuardarLibro extends javax.swing.JFrame {
         entityManager = Persistence.createEntityManagerFactory("BibliotecaPU").createEntityManager();
         consultaLibro = entityManager.createNamedQuery("Libro.findAll");
         libros.setListaLibros(consultaLibro.getResultList());
-
         //quiero que el date se convierta en string hay que hacerlo cuando se muestre en pantalla
         //añadir editoriales
         Editorial editorial;
@@ -61,7 +62,6 @@ public class GuardarLibro extends javax.swing.JFrame {
         editoriales.getListaEditorial().add(editorial);
         editorial = new Editorial(1, "Minotauro");
         editoriales.getListaEditorial().add(editorial);
-
         //añadir generos
         Genero genero;
         genero = new Genero(1, "Fantasia");
@@ -69,16 +69,14 @@ public class GuardarLibro extends javax.swing.JFrame {
         genero = new Genero(1, "Ciencia ficción");
         generos.getListaGenero().add(genero);
         //rellenar los jComboBox
-        jComboBoxEditorial.setModel(new DefaultComboBoxModel(editoriales.getListaEditorial().toArray()));
-        //jComboBox1.setRenderer(new ListasDeplegablesRenderer());
+        jComboBoxEditorial.setModel(new DefaultComboBoxModel(editoriales.getListaEditorial().toArray())); 
         jComboBoxGenero.setModel(new DefaultComboBoxModel(generos.getListaGenero().toArray()));
-        //jComboBox2.setRenderer(nw ListasDeplegablesRenderer());
+
 
         /**
          * Permitir sólo una fila seleccionada
          */
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
         /**
          * Añadir un detector de cambio de selección en la tabla
          */
@@ -89,6 +87,7 @@ public class GuardarLibro extends javax.swing.JFrame {
                     }
                 }
         );
+        
         //creacion del contenedor de los libros
 //        //se crea un libro individual
 //        libro = new Libro(1, "ESDLA", "Tolkien", 0000000001, Date.from(Instant.now()), 2, editorial, genero, true, "El libro va de ");
@@ -99,18 +98,14 @@ public class GuardarLibro extends javax.swing.JFrame {
 //        libros.getListaLibros().add(libro);
 //        jTable1.setValueAt(libro, 0, 0);
         //
-
         archivoTableModel = new ArchivoTableModel(libros);
         //
         jTable1.setModel(archivoTableModel);
-        //jTable1.getColumnModel().getColumn(4).setCellRenderer(new FechaRenderer());
-
-        //jTextField1.setDocument(new MaxLengthDocument(15));
         jComboBoxEditorial.setRenderer(new EditorialDeplegableRenderer());
         jComboBoxGenero.setRenderer(new GeneroDesplegableRender());
-
+        jTable1.getColumnModel().getColumn(7).setCellRenderer(new PrestadoRenderer());
         //jTable1.getColumnModel().getColumn(3).setCellRenderer(new FechaRenderer());
-        //jTable1.getColumnModel().getColumn(6).setCellRenderer(new ListasDeplegablesRenderer());
+        
         /**
          * Con esto controlamos la cantidad de letras que vamos a colocar en los
          * campos
@@ -126,7 +121,6 @@ public class GuardarLibro extends javax.swing.JFrame {
         //llama al metodo creado
 //        this.ListaTabla();
     }
-
     /**
      * Nos permite mostrar los datos en los campos
      */
@@ -156,7 +150,6 @@ public class GuardarLibro extends javax.swing.JFrame {
             //añadirlo al libro
         }
     }
-
     /**
      * Insertar un libro
      */
@@ -281,6 +274,11 @@ public class GuardarLibro extends javax.swing.JFrame {
         jComboBoxGenero.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jComboBoxEditorial.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxEditorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxEditorialActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Editorial");
 
@@ -518,8 +516,7 @@ public class GuardarLibro extends javax.swing.JFrame {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         Libro libro = new Libro();
         //recoge informacion de los campos de texto y lo pone en la tabla
-        //Libro libro = libros.getLibro(jTable1.getSelectedRow());
-        // libro.setIDlibro(Integer.valueOf(jTextField1.getText()));
+       
         libro.setNombreLibro(jTextFieldNombre.getText());
         libro.setAutor(jTextFieldAutor.getText());
         libro.setIsbn(String.valueOf(jTextFieldISBN.getText()));
@@ -611,11 +608,12 @@ public class GuardarLibro extends javax.swing.JFrame {
     private void jButtonHistorialPrestadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHistorialPrestadoActionPerformed
 
         /*añadido por que mas abajo daba error*/
-        Libro libro = new Libro();
+        //Libro libro = new Libro();
 //         if (libro.getPrestado() == true) {
 
         Connection con;
         try {
+            //nos conecta con el archivo 
             con = DriverManager.getConnection("jdbc:mysql://localhost/Biblioteca", "root", "");
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM Libro");
@@ -634,23 +632,23 @@ public class GuardarLibro extends javax.swing.JFrame {
 
             while (rs.next()) {
                 /*
-                *Es el nombre que tengas puesto en la base de datos 
-                */
-                String nombre = rs.getString("Nombre_Libro");
-                String autor = rs.getString("Autor");
-                int isbn = rs.getInt("ISBN");
-                String editorial = rs.getString("editorial");
-                String genero = rs.getString("Genero");
-                String prestadA = rs.getString("PrestadoA");
+                 *Es el nombre que tengas puesto en la base de datos 
+                 */
+//                String nombre = rs.getString("Nombre_Libro");
+//                String autor = rs.getString("Autor");
+//                int isbn = rs.getInt("ISBN");
+//                String editorial = rs.getString("editorial");
+//                String genero = rs.getString("Genero");
+//                String prestadA = rs.getString("PrestadoA");
 
-                libro.setNombreLibro(nombre);
-                libro.setAutor(autor);
-                libro.setIsbn(String.valueOf(isbn));
-                libro.setEditorial(editorial);
-                libro.setGenero(genero);
-                libro.setPrestadoA(prestadA);
-
-                jTextArea2.append(libro.getNombreLibro() + " " + libro.getAutor() + "\n");
+//                libro.setNombreLibro(nombre);
+//                libro.setAutor(autor);
+//                libro.setIsbn(String.valueOf(isbn));
+//                libro.setEditorial(editorial);
+//                libro.setGenero(genero);
+//                libro.setPrestadoA(prestadA);
+//
+//                jTextArea2.append(libro.getNombreLibro() + " " + libro.getAutor() + "\n");
 
                 //jTextArea1.append(nombre+autor);
             }
@@ -662,6 +660,10 @@ public class GuardarLibro extends javax.swing.JFrame {
 
 //         }
     }//GEN-LAST:event_jButtonHistorialPrestadoActionPerformed
+
+    private void jComboBoxEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEditorialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxEditorialActionPerformed
 
     /**
      * @param args the command line arguments
