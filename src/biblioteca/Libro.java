@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Libro.findByPrestado", query = "SELECT l FROM Libro l WHERE l.prestado = :prestado"),
     @NamedQuery(name = "Libro.findByPrestadoA", query = "SELECT l FROM Libro l WHERE l.prestadoA = :prestadoA"),
     @NamedQuery(name = "Libro.findBySinopsis", query = "SELECT l FROM Libro l WHERE l.sinopsis = :sinopsis")})
+
 public class Libro implements Serializable {
     @OneToMany(mappedBy = "iDlibro")
     private Collection<Prestamo> prestamoCollection;

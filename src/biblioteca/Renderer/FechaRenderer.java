@@ -11,11 +11,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class FechaRenderer extends DefaultTableCellRenderer {
 
-    @Override
-    protected void setValue(Object value) {
-      //  DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.short);
-        setText(fechaFormato.format(String.valueOf(value)));
-        setHorizontalAlignment(RIGHT);
-    }
+  //  @Override
+//    protected void setValue(Object value) {
+//        DateFormat fechaFormato = DateFormat.getDateInstance(DateFormat.short);
+//        setText(fechaFormato.format(String.valueOf(value)));
+//        setHorizontalAlignment(RIGHT);
+//    }
 
 }

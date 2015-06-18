@@ -24,6 +24,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -52,9 +53,14 @@ public class GuardarLibro extends javax.swing.JFrame {
     public GuardarLibro() {
         initComponents();
 
+        //almacena la conexion
         entityManager = Persistence.createEntityManagerFactory("BibliotecaPU").createEntityManager();
+        //ejecutar el query, en este caso me da todos los libros
         consultaLibro = entityManager.createNamedQuery("Libro.findAll");
+        
+        //carga los datos en la lista
         libros.setListaLibros(consultaLibro.getResultList());
+        
         //quiero que el date se convierta en string hay que hacerlo cuando se muestre en pantalla
         //añadir editoriales
         Editorial editorial;
@@ -527,26 +533,14 @@ public class GuardarLibro extends javax.swing.JFrame {
         libro.setPrestado(jCheckBoxPrestado.isSelected());
         libro.setSinopsis(jTextAreaSinopsis.getText());
 
-        archivoTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
-        jTable1.setEnabled(true);
+//        archivoTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
+//        jTable1.setEnabled(true);
 
         insertLibro(libro);
 
         archivoTableModel.fireTableRowsInserted(libros.getListaLibros().size() - 1, libros.getListaLibros().size() - 1);
         // tableModel is a extends of AbstractTableModel
     }//GEN-LAST:event_jButtonGuardarActionPerformed
-
-    private void jTextFieldISBNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldISBNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldISBNActionPerformed
-
-    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreActionPerformed
-
-    private void jTextFieldISBNFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldISBNFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldISBNFocusGained
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
 
@@ -562,19 +556,23 @@ public class GuardarLibro extends javax.swing.JFrame {
             libros.getListaLibros().get(jTable1.getSelectedRow()).setGenero(String.valueOf(jComboBoxGenero.getSelectedItem()));
             libros.getListaLibros().get(jTable1.getSelectedRow()).setPrestado(jCheckBoxPrestado.isSelected());
             libros.getListaLibros().get(jTable1.getSelectedRow()).setSinopsis(jTextAreaSinopsis.getText());
-
         }
         // libros.getListaLibros().get(jTable1.getSelectedRow()) es un libro
         //jTable1.getSelectedRow() es la posicion
         //MIRAR QUE FILA SE HA SELECCIONADO, POSICION DE LA LISTA DEL LIBRO, 
+        /*
+        nos da un libro en X posicion 
+        */
         actualizarLibro(libros.getListaLibros().get(jTable1.getSelectedRow()), jTable1.getSelectedRow());
+        
         archivoTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
 
         int indexSelectedRow = jTable1.getSelectedRow();
-        entityManager.getTransaction().begin();
+        if (indexSelectedRow>=0) {
+            entityManager.getTransaction().begin();
         //borrar el que esta seleccionado en la lista
         entityManager.remove(libros.getListaLibros().get(indexSelectedRow));
         entityManager.getTransaction().commit();
@@ -583,27 +581,13 @@ public class GuardarLibro extends javax.swing.JFrame {
         libros.getListaLibros().remove(indexSelectedRow);
 
         archivoTableModel.fireTableRowsDeleted(indexSelectedRow, indexSelectedRow);
+        }else{
+            JOptionPane.showMessageDialog(this, "hay que seleccionar un elemento en la tabla");
+            
+        }
+        
         // tableModel is a extends of AbstractTableModel assigned to jTable
     }//GEN-LAST:event_jButtonEliminarActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-        jTable1.setEnabled(false);
-
-//        jTextField1.setEditable(true);
-        jTextFieldNombre.setEditable(true);
-        jTextFieldAutor.setEditable(true);
-        jTextFieldISBN.setEditable(true);
-        jTextFieldEdicion.setEditable(true);
-
-//        jTextField1.setText("");
-        jTextFieldNombre.setText("");
-        jTextFieldAutor.setText("");
-        jTextFieldISBN.setText("");
-        jTextFieldEdicion.setText("");
-        jCheckBoxPrestado.isSelected();
-
-    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButtonHistorialPrestadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHistorialPrestadoActionPerformed
 
@@ -624,38 +608,14 @@ public class GuardarLibro extends javax.swing.JFrame {
                         = JasperCompileManager.compileReport(
                                 "Biblioteca/Biblioteca.jrxml");
                 JasperPrint jasperPrint = JasperFillManager.fillReport(
+                        //aqui das los datos
                         jasperReport, parameters, new JRResultSetDataSource(rs));
                 JasperViewer.viewReport(jasperPrint);
             } catch (JRException ex) {
                 ex.printStackTrace();
             }
-
-            while (rs.next()) {
-                /*
-                 *Es el nombre que tengas puesto en la base de datos 
-                 */
-//                String nombre = rs.getString("Nombre_Libro");
-//                String autor = rs.getString("Autor");
-//                int isbn = rs.getInt("ISBN");
-//                String editorial = rs.getString("editorial");
-//                String genero = rs.getString("Genero");
-//                String prestadA = rs.getString("PrestadoA");
-
-//                libro.setNombreLibro(nombre);
-//                libro.setAutor(autor);
-//                libro.setIsbn(String.valueOf(isbn));
-//                libro.setEditorial(editorial);
-//                libro.setGenero(genero);
-//                libro.setPrestadoA(prestadA);
-//
-//                jTextArea2.append(libro.getNombreLibro() + " " + libro.getAutor() + "\n");
-
-                //jTextArea1.append(nombre+autor);
-            }
-
         } catch (SQLException ex) {
             Logger.getLogger(GuardarLibro.class.getName()).log(Level.SEVERE, null, ex);
-
         }
 
 //         }
@@ -664,6 +624,36 @@ public class GuardarLibro extends javax.swing.JFrame {
     private void jComboBoxEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEditorialActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxEditorialActionPerformed
+
+    private void jTextFieldISBNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldISBNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldISBNActionPerformed
+
+    private void jTextFieldISBNFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldISBNFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldISBNFocusGained
+
+    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNombreActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        jTable1.setEnabled(false);
+
+        //        jTextField1.setEditable(true);
+        jTextFieldNombre.setEditable(true);
+        jTextFieldAutor.setEditable(true);
+        jTextFieldISBN.setEditable(true);
+        jTextFieldEdicion.setEditable(true);
+
+        //        jTextField1.setText("");
+        jTextFieldNombre.setText("");
+        jTextFieldAutor.setText("");
+        jTextFieldISBN.setText("");
+        jTextFieldEdicion.setText("");
+        jCheckBoxPrestado.isSelected();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -21,7 +21,6 @@ public class Libros {
     public int getSize(){
         //
         return listaLibros.size();
-        
     }
     public Libro getLibro(int index){
         return this.listaLibros.get(index);
