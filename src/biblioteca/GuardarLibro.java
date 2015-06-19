@@ -57,7 +57,6 @@ public class GuardarLibro extends javax.swing.JFrame {
         entityManager = Persistence.createEntityManagerFactory("BibliotecaPU").createEntityManager();
         //ejecutar el query, en este caso me da todos los libros
         consultaLibro = entityManager.createNamedQuery("Libro.findAll");
-        
         //carga los datos en la lista
         libros.setListaLibros(consultaLibro.getResultList());
         
@@ -565,14 +564,14 @@ public class GuardarLibro extends javax.swing.JFrame {
         */
         actualizarLibro(libros.getListaLibros().get(jTable1.getSelectedRow()), jTable1.getSelectedRow());
         
-        archivoTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
+        //archivoTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
 
         int indexSelectedRow = jTable1.getSelectedRow();
         if (indexSelectedRow>=0) {
-            entityManager.getTransaction().begin();
+        entityManager.getTransaction().begin();
         //borrar el que esta seleccionado en la lista
         entityManager.remove(libros.getListaLibros().get(indexSelectedRow));
         entityManager.getTransaction().commit();
